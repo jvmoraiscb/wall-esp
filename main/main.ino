@@ -3,6 +3,7 @@
 
 #include "esp_camera.h"
 #include <WiFi.h>
+#include <ESP32Servo.h>
 
 //
 // WARNING!!! Make sure that you have either selected ESP32 Wrover Module,
@@ -68,7 +69,10 @@ extern int gpLf = 14; // Left 2
 extern int gpRb = 15; // Right 1
 extern int gpRf = 13; // Right 2
 extern int gpLed =  4; // Light
-extern int gpServo = 0; //Servo
+extern int gpServoBase = 12;
+extern int gpServoClaw = 16;
+extern int gpServoX = 3;
+extern int gpServoY = 1;
 extern String WiFiAddr ="";
 
 void startCameraServer();
@@ -78,12 +82,20 @@ void setup() {
   Serial.setDebugOutput(true);
   Serial.println();
 
-
   pinMode(gpLb, OUTPUT); //Left Backward
   pinMode(gpLf, OUTPUT); //Left Forward
   pinMode(gpRb, OUTPUT); //Right Forward
   pinMode(gpRf, OUTPUT); //Right Backward
   pinMode(gpLed, OUTPUT); //Light
+
+  /*ledcSetup(3, 50, 16); //50 hz PWM, 16-bit resolution and range from 3250 to 6500
+  ledcAttachPin(gpServoBase, 3);
+  ledcSetup(4, 50, 16); //50 hz PWM, 16-bit resolution and range from 3250 to 6500
+  ledcAttachPin(gpServoClaw, 4);
+  ledcSetup(5, 50, 16); //50 hz PWM, 16-bit resolution and range from 3250 to 6500
+  ledcAttachPin(gpServoX, 5);
+  ledcSetup(6, 50, 16); //50 hz PWM, 16-bit resolution and range from 3250 to 6500
+  ledcAttachPin(gpServoY, 6);*/
 
   //initialize
   digitalWrite(gpLb, LOW);

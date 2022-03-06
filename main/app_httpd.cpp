@@ -17,15 +17,32 @@
 #include "img_converters.h"
 #include "camera_index.h"
 #include "Arduino.h"
+#include <ESP32Servo.h>
 
 extern int gpLb;
 extern int gpLf;
 extern int gpRb;
 extern int gpRf;
 extern int gpLed;
-extern int gpServo;
+extern int gpServoBase;
 extern String WiFiAddr;
+extern int gpServoClaw;
+extern int gpServoX;
+extern int gpServoY;
 
+// Servo Setting
+Servo ignore1; // PWM channel 0 (PWM channel 0 and 1 are being used by the camera
+Servo ignore2; // PWM channel 1
+Servo servoBase;
+//Servo servoClaw;
+//Servo servoX;
+//Servo servoY;
+int servoBaseAngle;
+int servoClawAngle;
+int servoXAngle;
+int servoYAngle;
+
+void initializeServos();
 void WheelAct(int nLf, int nLb, int nRf, int nRb);
 
 typedef struct {
@@ -329,7 +346,9 @@ static esp_err_t index_handler(httpd_req_t *req){
  page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('ledoff')><b>Light OFF</b></button>";
  page += "</p>";
  page += "<p align=center>";
- page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servo')><b>Servo</b></button>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseLeft')><b>Base Left</b></button>";
+  page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseMiddle')><b>Base Middle</b></button>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseRight')><b>Base Right</b></button>";
  page += "</p>";
  
     return httpd_resp_send(req, &page[0], strlen(&page[0]));
@@ -380,9 +399,30 @@ static esp_err_t ledoff_handler(httpd_req_t *req){
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
-static esp_err_t servo_handler(httpd_req_t *req){
-    //digitalWrite(gpLed, HIGH);
-    Serial.println("Servo");
+static esp_err_t servoBaseLeft_handler(httpd_req_t *req){
+    if(servoBaseAngle >= 10){
+        servoBaseAngle -= 10;
+    }
+    //servoBase.write(servoBaseAngle);
+    Serial.print("Base Left | Value: ");
+    Serial.println(servoBaseAngle);
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, "OK", 2);
+}
+static esp_err_t servoBaseMiddle_handler(httpd_req_t *req){
+    servoBaseAngle = 90;
+    //servoBase.write(servoBaseAngle);
+    Serial.println("Base Middle");
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, "OK", 2);
+}
+static esp_err_t servoBaseRight_handler(httpd_req_t *req){
+    if(servoBaseAngle <= 170){
+        servoBaseAngle += 10;
+    }
+    //servoBase.write(servoBaseAngle);
+    Serial.print("Base Right | Value: ");
+    Serial.println(servoBaseAngle);;
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -439,10 +479,24 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
 
-    httpd_uri_t servo_uri = {
-        .uri       = "/servo",
+    httpd_uri_t servoBaseLeft_uri = {
+        .uri       = "/servoBaseLeft",
         .method    = HTTP_GET,
-        .handler   = servo_handler,
+        .handler   = servoBaseLeft_handler,
+        .user_ctx  = NULL
+    };
+
+    httpd_uri_t servoBaseMiddle_uri = {
+        .uri       = "/servoBaseMiddle",
+        .method    = HTTP_GET,
+        .handler   = servoBaseMiddle_handler,
+        .user_ctx  = NULL
+    };
+    
+    httpd_uri_t servoBaseRight_uri = {
+        .uri       = "/servoBaseRight",
+        .method    = HTTP_GET,
+        .handler   = servoBaseRight_handler,
         .user_ctx  = NULL
     };
 
@@ -493,7 +547,9 @@ void startCameraServer(){
         httpd_register_uri_handler(camera_httpd, &right_uri);
         httpd_register_uri_handler(camera_httpd, &ledon_uri);
         httpd_register_uri_handler(camera_httpd, &ledoff_uri);
-        httpd_register_uri_handler(camera_httpd, &servo_uri);
+        httpd_register_uri_handler(camera_httpd, &servoBaseLeft_uri);
+        httpd_register_uri_handler(camera_httpd, &servoBaseMiddle_uri);
+        httpd_register_uri_handler(camera_httpd, &servoBaseRight_uri);
     }
 
     config.server_port += 1;
@@ -502,6 +558,22 @@ void startCameraServer(){
     if (httpd_start(&stream_httpd, &config) == ESP_OK) {
         httpd_register_uri_handler(stream_httpd, &stream_uri);
     }
+    initializeServos();
+}
+
+void initializeServos(){
+  //servoBase.setPeriodHertz(50); // standard 50 hz servo
+  //servoClaw.setPeriodHertz(50); // standard 50 hz servo
+  //servoX.setPeriodHertz(50); // standard 50 hz servo
+  //servoY.setPeriodHertz(50); // standard 50 hz servo
+  //servoBase.attach(gpServoBase, 1000, 2000);
+  //servoClaw.attach(gpServoClaw, 1000, 2000);
+  //servoX.attach(gpServoX, 1000, 2000);
+  //servoY.attach(gpServoY, 1000, 2000);
+  //servoBase.write(servoBaseAngle);
+  //servoClaw.write(servoClawAngle);
+  //servoX.write(servoXAngle);
+  //servoY.write(servoYAngle);
 }
 
 void WheelAct(int nLf, int nLb, int nRf, int nRb)
