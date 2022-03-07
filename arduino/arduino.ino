@@ -1,5 +1,8 @@
+#include <SoftwareSerial.h>
 #include <Servo.h>
 
+const int serialRx = 12;
+const int serialTx = 13;
 const int pinServoBase = 3;
 const int pinServoClaw = 4;
 const int pinServoX = 5;
@@ -14,8 +17,11 @@ Servo servoClaw;
 Servo servoX;
 Servo servoY;
 
+SoftwareSerial SerialEsp32(serialRx, serialTx);
+
 void setup() {
   Serial.begin(9600);
+  SerialEsp32.begin(115200);
   
   servoBase.attach(pinServoBase);
   servoClaw.attach(pinServoClaw);
@@ -36,12 +42,14 @@ void setup() {
 
 void loop() {
   char string[32] = "";
+  strcpy(string, SerialEsp32.read());
   
   if(!strcmp(string, "servoBaseLeft")){
     if(servoBaseAngle >= 10){
         servoBaseAngle -= 10;
     }
     servoBase.write(servoBaseAngle);
+    Serial.println("FOI");
   }
   else if(!strcmp(string, "servoBaseMiddle")){
     servoBaseAngle = 90;

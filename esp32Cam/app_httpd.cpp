@@ -30,7 +30,7 @@ extern int gpServoX;
 extern int gpServoY;
 extern String WiFiAddr;
 
-/*Servo Setting
+//Servo Setting
 Servo servoBase;
 Servo servoClaw;
 Servo servoX;
@@ -38,7 +38,7 @@ Servo servoY;
 int servoBaseAngle = 90;
 int servoClawAngle = 90;
 int servoXAngle = 90;
-int servoYAngle = 90;*/
+int servoYAngle = 90;
 
 void WheelAct(int nLf, int nLb, int nRf, int nRb);
 
@@ -343,14 +343,25 @@ static esp_err_t index_handler(httpd_req_t *req){
  page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('ledoff')><b>Light OFF</b></button>";
  page += "</p>";
  page += "<p align=center>";
- page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseLeft')><b>Base Left</b></button>";
- page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseMiddle')><b>Base Middle</b></button>";
- page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseRight')><b>Base Right</b></button>";
- page += "</p>";
- page += "<p align=center>";
  page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoClawOpen')><b>Open Claw</b></button>";
  page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoClawClose')><b>Close Claw</b></button>";
  page += "</p>";
+ page += "<p align=center>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseLeft')><b>Left</b></button>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseMiddle')><b>Reset</b></button>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseRight')><b>Right</b></button>";
+ page += "</p>";
+ page += "<p align=center>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoXForward')><b>Forward</b></button>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoXReset')><b>Reset</b></button>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoXBackward')><b>Backward</b></button>";
+ page += "</p>";
+ page += "<p align=center>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoYUp')><b>Up</b></button>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoYReset')><b>Reset</b></button>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoYDown')><b>Down</b></button>";
+ page += "</p>";
+
  
     return httpd_resp_send(req, &page[0], strlen(&page[0]));
 }
@@ -413,9 +424,8 @@ static esp_err_t servoBaseLeft_handler(httpd_req_t *req){
         servoBaseAngle -= 10;
     }
     servoBase.write(servoBaseAngle);
-    servoBase.detach();
-    Serial.print("Base Left | Value: ");
-    Serial.println(servoBaseAngle);
+    //servoBase.detach();
+    Serial.println("servoBaseLeft");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -430,8 +440,8 @@ static esp_err_t servoBaseMiddle_handler(httpd_req_t *req){
     }
     servoBaseAngle = 90;
     servoBase.write(servoBaseAngle);
-    servoBase.detach();
-    Serial.println("Base Middle");
+    //servoBase.detach();
+    Serial.println("servoBaseMiddle");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -448,9 +458,114 @@ static esp_err_t servoBaseRight_handler(httpd_req_t *req){
         servoBaseAngle += 10;
     }
     servoBase.write(servoBaseAngle);
-    servoBase.detach();
-    Serial.print("Base Right | Value: ");
-    Serial.println(servoBaseAngle);
+    //servoBase.detach();
+    Serial.println("servoBaseRight");
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, "OK", 2);
+}
+
+static esp_err_t servoXForward_handler(httpd_req_t *req){
+    if(!servoX.attached()){
+      servoX.attach(
+        gpServoX,
+        4,
+        0,
+        180
+      );
+    }
+    if(servoXAngle >= 10){
+        servoXAngle -= 10;
+    }
+    servoX.write(servoXAngle);
+    //servoBase.detach();
+    Serial.println("servoXForward");
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, "OK", 2);
+}
+static esp_err_t servoXReset_handler(httpd_req_t *req){
+    if(!servoX.attached()){
+      servoX.attach(
+        gpServoX,
+        4,
+        0,
+        180
+      );
+    }
+    servoXAngle = 90;
+    servoX.write(servoXAngle);
+    //servoBase.detach();
+    Serial.println("servoXReset");
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, "OK", 2);
+}
+static esp_err_t servoXBackward_handler(httpd_req_t *req){
+    if(!servoX.attached()){
+      servoX.attach(
+        gpServoX,
+        4,
+        0,
+        180
+      );
+    }
+    if(servoXAngle <= 170){
+        servoXAngle += 10;
+    }
+    servoX.write(servoXAngle);
+    //servoBase.detach();
+    Serial.println("servoXBackward");
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, "OK", 2);
+}
+
+static esp_err_t servoYUp_handler(httpd_req_t *req){
+    if(!servoY.attached()){
+      servoY.attach(
+        gpServoY,
+        4,
+        0,
+        180
+      );
+    }
+    if(servoYAngle >= 10){
+        servoYAngle -= 10;
+    }
+    servoY.write(servoYAngle);
+    //servoBase.detach();
+    Serial.println("servoYUp");
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, "OK", 2);
+}
+static esp_err_t servoYReset_handler(httpd_req_t *req){
+    if(!servoY.attached()){
+      servoY.attach(
+        gpServoY,
+        4,
+        0,
+        180
+      );
+    }
+    servoYAngle = 90;
+    servoY.write(servoYAngle);
+    //servoBase.detach();
+    Serial.println("servoYReset");
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, "OK", 2);
+}
+static esp_err_t servoYDown_handler(httpd_req_t *req){
+    if(!servoY.attached()){
+      servoY.attach(
+        gpServoY,
+        4,
+        0,
+        180
+      );
+    }
+    if(servoYAngle <= 170){
+        servoYAngle += 10;
+    }
+    servoY.write(servoYAngle);
+    //servoBase.detach();
+    Serial.println("servoYDown");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -459,15 +574,14 @@ static esp_err_t servoClawOpen_handler(httpd_req_t *req){
     if(!servoClaw.attached()){
       servoClaw.attach(
         gpServoClaw,
-        2,
+        3,
         0,
         180
       );
     }
     servoClawAngle = 50;
     servoClaw.write(servoClawAngle);
-    servoClaw.detach();
-    Serial.println("Claw Open");
+    Serial.println("servoClawOpen");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -476,15 +590,14 @@ static esp_err_t servoClawClose_handler(httpd_req_t *req){
     if(!servoClaw.attached()){
       servoClaw.attach(
         gpServoClaw,
-        2,
+        3,
         0,
         180
       );
     }
     servoClawAngle = 100;
     servoClaw.write(servoClawAngle);
-    servoClaw.detach();
-    Serial.println("Claw Close");
+    Serial.println("servoClawClose");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -562,6 +675,48 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
 
+        httpd_uri_t servoXForward_uri = {
+        .uri       = "/servoXForward",
+        .method    = HTTP_GET,
+        .handler   = servoXForward_handler,
+        .user_ctx  = NULL
+    };
+
+    httpd_uri_t servoXReset_uri = {
+        .uri       = "/servoXReset",
+        .method    = HTTP_GET,
+        .handler   = servoXReset_handler,
+        .user_ctx  = NULL
+    };
+    
+    httpd_uri_t servoXBackward_uri = {
+        .uri       = "/servoXBackward",
+        .method    = HTTP_GET,
+        .handler   = servoXBackward_handler,
+        .user_ctx  = NULL
+    };
+
+    httpd_uri_t servoYUp_uri = {
+        .uri       = "/servoYUp",
+        .method    = HTTP_GET,
+        .handler   = servoYUp_handler,
+        .user_ctx  = NULL
+    };
+
+    httpd_uri_t servoYReset_uri = {
+        .uri       = "/servoYReset",
+        .method    = HTTP_GET,
+        .handler   = servoYReset_handler,
+        .user_ctx  = NULL
+    };
+    
+    httpd_uri_t servoYDown_uri = {
+        .uri       = "/servoYDown",
+        .method    = HTTP_GET,
+        .handler   = servoYDown_handler,
+        .user_ctx  = NULL
+    };
+
     httpd_uri_t servoClawOpen_uri = {
         .uri       = "/servoClawOpen",
         .method    = HTTP_GET,
@@ -626,6 +781,12 @@ void startCameraServer(){
         httpd_register_uri_handler(camera_httpd, &servoBaseLeft_uri);
         httpd_register_uri_handler(camera_httpd, &servoBaseMiddle_uri);
         httpd_register_uri_handler(camera_httpd, &servoBaseRight_uri);
+        httpd_register_uri_handler(camera_httpd, &servoXForward_uri);
+        httpd_register_uri_handler(camera_httpd, &servoXReset_uri);
+        httpd_register_uri_handler(camera_httpd, &servoXBackward_uri);
+        httpd_register_uri_handler(camera_httpd, &servoYUp_uri);
+        httpd_register_uri_handler(camera_httpd, &servoYReset_uri);
+        httpd_register_uri_handler(camera_httpd, &servoYDown_uri);
         httpd_register_uri_handler(camera_httpd, &servoClawOpen_uri);
         httpd_register_uri_handler(camera_httpd, &servoClawClose_uri);
     }

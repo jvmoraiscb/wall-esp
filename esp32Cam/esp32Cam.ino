@@ -63,15 +63,15 @@ const char* password = "DA4C5647";   //Enter WIFI Password
 #endif
 
 // GPIO Setting
-extern int gpLb =  12; // Left 1
-extern int gpLf = 13; // Left 2
-extern int gpRb = 15; // Right 1
-extern int gpRf = 14; // Right 2
+extern int gpLb =  16; // Left 1
+extern int gpLf = 0; // Left 2
+extern int gpRb = 3; // Right 1
+extern int gpRf = 1; // Right 2
 extern int gpLed =  4; // Light
-extern int gpServoBase = 16;
-extern int gpServoClaw = 2;
-extern int gpServoX = 3;
-extern int gpServoY = 1;
+extern int gpServoBase = 12;
+extern int gpServoClaw = 13;
+extern int gpServoX = 15;
+extern int gpServoY = 14;
 extern String WiFiAddr ="";
 
 void startCameraServer();
