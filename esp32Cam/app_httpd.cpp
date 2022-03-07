@@ -341,6 +341,7 @@ static esp_err_t index_handler(httpd_req_t *req){
   page += "button{";
   page += "box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);";
   page += "border-radius: 10px;";
+  page += "user-select: none;";      
   page += "}";
   page += "</style>";
   page += "<section>";
