@@ -1,7 +1,7 @@
 # WALL-E_ESP32-PROJECT
 *Federal University of Espírito Santo - UFES - Computer Engineering*  
 Projeto Integrado em Computação - PIC  
-**Made by João, Talles and Vinicius Cole** 
+**Made by João Victor Morais, Talles Cavalleiro and Vinicius Cole** 
 
 ## Summary
 
