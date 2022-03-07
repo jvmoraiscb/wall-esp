@@ -17,7 +17,7 @@
 #include "img_converters.h"
 #include "camera_index.h"
 #include "Arduino.h"
-#include <ESP32Servo.h>
+#include <Servo.h> //alternative library <ServoESP32>
 
 extern int gpLb;
 extern int gpLf;
@@ -25,24 +25,21 @@ extern int gpRb;
 extern int gpRf;
 extern int gpLed;
 extern int gpServoBase;
-extern String WiFiAddr;
 extern int gpServoClaw;
 extern int gpServoX;
 extern int gpServoY;
+extern String WiFiAddr;
 
-// Servo Setting
-Servo ignore1; // PWM channel 0 (PWM channel 0 and 1 are being used by the camera
-Servo ignore2; // PWM channel 1
+/*Servo Setting
 Servo servoBase;
-//Servo servoClaw;
-//Servo servoX;
-//Servo servoY;
-int servoBaseAngle;
-int servoClawAngle;
-int servoXAngle;
-int servoYAngle;
+Servo servoClaw;
+Servo servoX;
+Servo servoY;
+int servoBaseAngle = 90;
+int servoClawAngle = 90;
+int servoXAngle = 90;
+int servoYAngle = 90;*/
 
-void initializeServos();
 void WheelAct(int nLf, int nLb, int nRf, int nRb);
 
 typedef struct {
@@ -347,8 +344,12 @@ static esp_err_t index_handler(httpd_req_t *req){
  page += "</p>";
  page += "<p align=center>";
  page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseLeft')><b>Base Left</b></button>";
-  page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseMiddle')><b>Base Middle</b></button>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseMiddle')><b>Base Middle</b></button>";
  page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoBaseRight')><b>Base Right</b></button>";
+ page += "</p>";
+ page += "<p align=center>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoClawOpen')><b>Open Claw</b></button>";
+ page += "<button style=background-color:yellow;width:140px;height:40px onmousedown=getsend('servoClawClose')><b>Close Claw</b></button>";
  page += "</p>";
  
     return httpd_resp_send(req, &page[0], strlen(&page[0]));
@@ -400,29 +401,90 @@ static esp_err_t ledoff_handler(httpd_req_t *req){
     return httpd_resp_send(req, "OK", 2);
 }
 static esp_err_t servoBaseLeft_handler(httpd_req_t *req){
+    if(!servoBase.attached()){
+      servoBase.attach(
+        gpServoBase,
+        2,
+        0,
+        180
+      );
+    }
     if(servoBaseAngle >= 10){
         servoBaseAngle -= 10;
     }
-    //servoBase.write(servoBaseAngle);
+    servoBase.write(servoBaseAngle);
+    servoBase.detach();
     Serial.print("Base Left | Value: ");
     Serial.println(servoBaseAngle);
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 static esp_err_t servoBaseMiddle_handler(httpd_req_t *req){
+    if(!servoBase.attached()){
+      servoBase.attach(
+        gpServoBase,
+        2,
+        0,
+        180
+      );
+    }
     servoBaseAngle = 90;
-    //servoBase.write(servoBaseAngle);
+    servoBase.write(servoBaseAngle);
+    servoBase.detach();
     Serial.println("Base Middle");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 static esp_err_t servoBaseRight_handler(httpd_req_t *req){
+    if(!servoBase.attached()){
+      servoBase.attach(
+        gpServoBase,
+        2,
+        0,
+        180
+      );
+    }
     if(servoBaseAngle <= 170){
         servoBaseAngle += 10;
     }
-    //servoBase.write(servoBaseAngle);
+    servoBase.write(servoBaseAngle);
+    servoBase.detach();
     Serial.print("Base Right | Value: ");
-    Serial.println(servoBaseAngle);;
+    Serial.println(servoBaseAngle);
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, "OK", 2);
+}
+
+static esp_err_t servoClawOpen_handler(httpd_req_t *req){
+    if(!servoClaw.attached()){
+      servoClaw.attach(
+        gpServoClaw,
+        2,
+        0,
+        180
+      );
+    }
+    servoClawAngle = 50;
+    servoClaw.write(servoClawAngle);
+    servoClaw.detach();
+    Serial.println("Claw Open");
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, "OK", 2);
+}
+
+static esp_err_t servoClawClose_handler(httpd_req_t *req){
+    if(!servoClaw.attached()){
+      servoClaw.attach(
+        gpServoClaw,
+        2,
+        0,
+        180
+      );
+    }
+    servoClawAngle = 100;
+    servoClaw.write(servoClawAngle);
+    servoClaw.detach();
+    Serial.println("Claw Close");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -500,6 +562,20 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
 
+    httpd_uri_t servoClawOpen_uri = {
+        .uri       = "/servoClawOpen",
+        .method    = HTTP_GET,
+        .handler   = servoClawOpen_handler,
+        .user_ctx  = NULL
+    };
+
+    httpd_uri_t servoClawClose_uri = {
+        .uri       = "/servoClawClose",
+        .method    = HTTP_GET,
+        .handler   = servoClawClose_handler,
+        .user_ctx  = NULL
+    };
+
     httpd_uri_t index_uri = {
         .uri       = "/",
         .method    = HTTP_GET,
@@ -550,6 +626,8 @@ void startCameraServer(){
         httpd_register_uri_handler(camera_httpd, &servoBaseLeft_uri);
         httpd_register_uri_handler(camera_httpd, &servoBaseMiddle_uri);
         httpd_register_uri_handler(camera_httpd, &servoBaseRight_uri);
+        httpd_register_uri_handler(camera_httpd, &servoClawOpen_uri);
+        httpd_register_uri_handler(camera_httpd, &servoClawClose_uri);
     }
 
     config.server_port += 1;
@@ -558,23 +636,24 @@ void startCameraServer(){
     if (httpd_start(&stream_httpd, &config) == ESP_OK) {
         httpd_register_uri_handler(stream_httpd, &stream_uri);
     }
-    initializeServos();
 }
 
-void initializeServos(){
-  //servoBase.setPeriodHertz(50); // standard 50 hz servo
-  //servoClaw.setPeriodHertz(50); // standard 50 hz servo
-  //servoX.setPeriodHertz(50); // standard 50 hz servo
-  //servoY.setPeriodHertz(50); // standard 50 hz servo
-  //servoBase.attach(gpServoBase, 1000, 2000);
-  //servoClaw.attach(gpServoClaw, 1000, 2000);
-  //servoX.attach(gpServoX, 1000, 2000);
-  //servoY.attach(gpServoY, 1000, 2000);
-  //servoBase.write(servoBaseAngle);
-  //servoClaw.write(servoClawAngle);
-  //servoX.write(servoXAngle);
-  //servoY.write(servoYAngle);
-}
+    /*if(!servoX.attached()){
+      servoX.attach(
+        gpServoX,
+        4,
+        0,
+        180
+      );
+     }
+    if(!servoY.attached()){
+      servoY.attach(
+        gpServoY,
+        5,
+        0,
+        180
+      );
+     }*/
 
 void WheelAct(int nLf, int nLb, int nRf, int nRb)
 {
