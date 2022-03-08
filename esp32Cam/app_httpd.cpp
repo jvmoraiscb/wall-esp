@@ -111,7 +111,7 @@ static esp_err_t capture_handler(httpd_req_t *req){
 
     fb = esp_camera_fb_get();
     if (!fb) {
-        Serial.printf("Camera capture failed");
+        //Serial.printf("Camera capture failed");
         httpd_resp_send_500(req);
         return ESP_FAIL;
     }
@@ -155,7 +155,7 @@ static esp_err_t stream_handler(httpd_req_t *req){
     while(true){
         fb = esp_camera_fb_get();
         if (!fb) {
-            Serial.printf("Camera capture failed");
+            //Serial.printf("Camera capture failed");
             res = ESP_FAIL;
         } else {
             if(fb->format != PIXFORMAT_JPEG){
@@ -163,7 +163,7 @@ static esp_err_t stream_handler(httpd_req_t *req){
                 esp_camera_fb_return(fb);
                 fb = NULL;
                 if(!jpeg_converted){
-                    Serial.printf("JPEG compression failed");
+                    //Serial.printf("JPEG compression failed");
                     res = ESP_FAIL;
                 }
             } else {
@@ -351,7 +351,7 @@ static esp_err_t index_handler(httpd_req_t *req){
   page += "</p>";
   page += "<p align=center>";
   page += "<button style=background-color:azure;width:9vw;height:8vw; onmousedown=getsend('left') onmouseup=getsend('stop') ontouchstart=getsend('left') ontouchend=getsend('stop')><b>Left</b></button>&nbsp;";
-  page += "<button style=background-color:lightcoral;width:9vw;height:8vw onmousedown=getsend('stop') onmouseup=getsend('stop')><b>Stop</b></button>&nbsp;";
+  page += "<button style=background-color:lightcoral;width:9vw;height:8vw onmousedown=getsend('stop')><b>Stop</b></button>&nbsp;";
   page += "<button style=background-color:azure;width:9vw;height:8vw onmousedown=getsend('right') onmouseup=getsend('stop') ontouchstart=getsend('right') ontouchend=getsend('stop')><b>Right</b></button>";
   page += "</p>";
   page += "<p align=center>";
@@ -395,46 +395,46 @@ static esp_err_t index_handler(httpd_req_t *req){
 
 static esp_err_t go_handler(httpd_req_t *req){
     WheelAct(HIGH, LOW, HIGH, LOW);
-    Serial.println("Go");
+    //Serial.println("Forward");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 static esp_err_t back_handler(httpd_req_t *req){
     WheelAct(LOW, HIGH, LOW, HIGH);
-    Serial.println("Back");
+    //Serial.println("Backward");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 
 static esp_err_t left_handler(httpd_req_t *req){
     WheelAct(HIGH, LOW, LOW, HIGH);
-    Serial.println("Left");
+    //Serial.println("Left");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 static esp_err_t right_handler(httpd_req_t *req){
     WheelAct(LOW, HIGH, HIGH, LOW);
-    Serial.println("Right");
+    //Serial.println("Right");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 
 static esp_err_t stop_handler(httpd_req_t *req){
     WheelAct(LOW, LOW, LOW, LOW);
-    Serial.println("Stop");
+    //Serial.println("Stop");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 
 static esp_err_t ledon_handler(httpd_req_t *req){
     digitalWrite(gpLed, HIGH);
-    Serial.println("LED ON");
+    //Serial.println("LED ON");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 static esp_err_t ledoff_handler(httpd_req_t *req){
     digitalWrite(gpLed, LOW);
-    Serial.println("LED OFF");
+    //Serial.println("LED OFF");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -452,7 +452,7 @@ static esp_err_t servoBaseLeft_handler(httpd_req_t *req){
     }
     servoBase.write(servoBaseAngle);
     //servoBase.detach();
-    Serial.println("servoBaseLeft");
+    //Serial.println("servoBaseLeft");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -468,7 +468,7 @@ static esp_err_t servoBaseMiddle_handler(httpd_req_t *req){
     servoBaseAngle = 90;
     servoBase.write(servoBaseAngle);
     //servoBase.detach();
-    Serial.println("servoBaseMiddle");
+    //Serial.println("servoBaseMiddle");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -486,7 +486,7 @@ static esp_err_t servoBaseRight_handler(httpd_req_t *req){
     }
     servoBase.write(servoBaseAngle);
     //servoBase.detach();
-    Serial.println("servoBaseRight");
+    //Serial.println("servoBaseRight");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -505,7 +505,7 @@ static esp_err_t servoXForward_handler(httpd_req_t *req){
     }
     servoX.write(servoXAngle);
     //servoBase.detach();
-    Serial.println("servoXForward");
+    //Serial.println("servoXForward");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -521,7 +521,7 @@ static esp_err_t servoXReset_handler(httpd_req_t *req){
     servoXAngle = 90;
     servoX.write(servoXAngle);
     //servoBase.detach();
-    Serial.println("servoXReset");
+    //Serial.println("servoXReset");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -539,7 +539,7 @@ static esp_err_t servoXBackward_handler(httpd_req_t *req){
     }
     servoX.write(servoXAngle);
     //servoBase.detach();
-    Serial.println("servoXBackward");
+    //Serial.println("servoXBackward");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -548,7 +548,7 @@ static esp_err_t servoYUp_handler(httpd_req_t *req){
     if(!servoY.attached()){
       servoY.attach(
         gpServoY,
-        4,
+        5,
         0,
         180
       );
@@ -558,7 +558,7 @@ static esp_err_t servoYUp_handler(httpd_req_t *req){
     }
     servoY.write(servoYAngle);
     //servoBase.detach();
-    Serial.println("servoYUp");
+    //Serial.println("servoYUp");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -566,7 +566,7 @@ static esp_err_t servoYReset_handler(httpd_req_t *req){
     if(!servoY.attached()){
       servoY.attach(
         gpServoY,
-        4,
+        5,
         0,
         180
       );
@@ -574,7 +574,7 @@ static esp_err_t servoYReset_handler(httpd_req_t *req){
     servoYAngle = 90;
     servoY.write(servoYAngle);
     //servoBase.detach();
-    Serial.println("servoYReset");
+    //Serial.println("servoYReset");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -582,7 +582,7 @@ static esp_err_t servoYDown_handler(httpd_req_t *req){
     if(!servoY.attached()){
       servoY.attach(
         gpServoY,
-        4,
+        5,
         0,
         180
       );
@@ -592,7 +592,7 @@ static esp_err_t servoYDown_handler(httpd_req_t *req){
     }
     servoY.write(servoYAngle);
     //servoBase.detach();
-    Serial.println("servoYDown");
+    //Serial.println("servoYDown");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -608,7 +608,7 @@ static esp_err_t servoClawOpen_handler(httpd_req_t *req){
     }
     servoClawAngle = 50;
     servoClaw.write(servoClawAngle);
-    Serial.println("servoClawOpen");
+    //Serial.println("servoClawOpen");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -624,7 +624,7 @@ static esp_err_t servoClawClose_handler(httpd_req_t *req){
     }
     servoClawAngle = 100;
     servoClaw.write(servoClawAngle);
-    Serial.println("servoClawClose");
+    //Serial.println("servoClawClose");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -795,7 +795,7 @@ void startCameraServer(){
 
 
     ra_filter_init(&ra_filter, 20);
-    Serial.printf("Starting web server on port: '%d'", config.server_port);
+    //Serial.printf("Starting web server on port: '%d'", config.server_port);
     if (httpd_start(&camera_httpd, &config) == ESP_OK) {
         httpd_register_uri_handler(camera_httpd, &index_uri);
         httpd_register_uri_handler(camera_httpd, &go_uri); 
@@ -820,7 +820,7 @@ void startCameraServer(){
 
     config.server_port += 1;
     config.ctrl_port += 1;
-    Serial.printf("Starting stream server on port: '%d'", config.server_port);
+    //Serial.printf("Starting stream server on port: '%d'", config.server_port);
     if (httpd_start(&stream_httpd, &config) == ESP_OK) {
         httpd_register_uri_handler(stream_httpd, &stream_uri);
     }

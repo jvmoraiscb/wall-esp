@@ -1,4 +1,3 @@
-
 //File: index.html.gz, Size: 3635 
 #define index_html_gz_len 3635
 const uint8_t index_html_gz[] = {

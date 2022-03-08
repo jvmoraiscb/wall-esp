@@ -63,23 +63,23 @@ const char* password = "DA4C5647";   //Enter WIFI Password
 #endif
 
 // GPIO Setting
-extern int gpLb =  16; // Left 1
-extern int gpLf = 0; // Left 2
-extern int gpRb = 3; // Right 1
-extern int gpRf = 1; // Right 2
+extern int gpLb =  16; // Left 1 16
+extern int gpLf = 0; // Left 2 0
+extern int gpRb = 3; // Right 1 3
+extern int gpRf = 1; // Right 2 1
 extern int gpLed =  4; // Light
-extern int gpServoBase = 12;
-extern int gpServoClaw = 13;
-extern int gpServoX = 15;
-extern int gpServoY = 14;
+extern int gpServoBase = 12; //12
+extern int gpServoClaw = 13; //13
+extern int gpServoX = 15; //15
+extern int gpServoY = 14; //14
 extern String WiFiAddr ="";
 
 void startCameraServer();
 
 void setup() {
-  Serial.begin(115200);
-  Serial.setDebugOutput(true);
-  Serial.println();
+  //Serial.begin(115200);
+  //Serial.setDebugOutput(true);
+  //Serial.println();
 
   pinMode(gpLb, OUTPUT); //Left Backward
   pinMode(gpLf, OUTPUT); //Left Forward
@@ -138,7 +138,7 @@ void setup() {
   // camera init
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
-    Serial.printf("Camera init failed with error 0x%x", err);
+    //Serial.printf("Camera init failed with error 0x%x", err);
     return;
   }
 
@@ -150,17 +150,17 @@ void setup() {
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
+    //Serial.print(".");
   }
-  Serial.println("");
-  Serial.println("WiFi connected");
+  //Serial.println("");
+  //Serial.println("WiFi connected");
 
   startCameraServer();
 
-  Serial.print("Camera Ready! Use 'http://");
-  Serial.print(WiFi.localIP());
+  //Serial.print("Camera Ready! Use 'http://");
+  //Serial.print(WiFi.localIP());
   WiFiAddr = WiFi.localIP().toString();
-  Serial.println("' to connect");
+  //Serial.println("' to connect");
 }
 
 void loop() {
