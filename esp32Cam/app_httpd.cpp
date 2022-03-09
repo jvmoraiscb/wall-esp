@@ -362,11 +362,6 @@ static esp_err_t index_handler(httpd_req_t *req){
   page += "<p align=center><IMG SRC='http://" + WiFiAddr + ":81/stream' style='width:300px; transform:rotate(180deg);'></p><br/><br/>";
   page += "<div>";
   page += "<p align=center>";
-  page += "<button style=background-color:ghostwhite;width:9vw;height:8vw onmousedown=getsend('servoBaseLeft')><b>Left</b></button>";
-  page += "<button style=background-color:lightcoral;width:9vw;height:8vw onmousedown=getsend('servoBaseMiddle')><b>Reset</b></button>";
-  page += "<button style=background-color:ghostwhite;width:9vw;height:8vw onmousedown=getsend('servoBaseRight')><b>Right</b></button>";
-  page += "</p>";
-  page += "<p align=center>";
   page += "<button style=background-color:ghostwhite;width:9vw;height:8vw onmousedown=getsend('servoXForward')><b>Forward</b></button>";
   page += "<button style=background-color:lightcoral;width:9vw;height:8vw onmousedown=getsend('servoXReset')><b>Reset</b></button>";
   page += "<button style=background-color:ghostwhite;width:9vw;height:8vw onmousedown=getsend('servoXBackward')><b>Backward</b></button>";
@@ -439,59 +434,6 @@ static esp_err_t ledoff_handler(httpd_req_t *req){
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
-static esp_err_t servoBaseLeft_handler(httpd_req_t *req){
-    if(!servoBase.attached()){
-      servoBase.attach(
-        gpServoBase,
-        2,
-        0,
-        180
-      );
-    }
-    if(servoBaseAngle >= 10){
-        servoBaseAngle -= 10;
-    }
-    servoBase.write(servoBaseAngle);
-    //servoBase.detach();
-    //Serial.println("servoBaseLeft");
-    httpd_resp_set_type(req, "text/html");
-    return httpd_resp_send(req, "OK", 2);
-}
-static esp_err_t servoBaseMiddle_handler(httpd_req_t *req){
-    if(!servoBase.attached()){
-      servoBase.attach(
-        gpServoBase,
-        2,
-        0,
-        180
-      );
-    }
-    servoBaseAngle = 90;
-    servoBase.write(servoBaseAngle);
-    //servoBase.detach();
-    //Serial.println("servoBaseMiddle");
-    httpd_resp_set_type(req, "text/html");
-    return httpd_resp_send(req, "OK", 2);
-}
-static esp_err_t servoBaseRight_handler(httpd_req_t *req){
-    if(!servoBase.attached()){
-      servoBase.attach(
-        gpServoBase,
-        2,
-        0,
-        180
-      );
-    }
-    if(servoBaseAngle <= 170){
-        servoBaseAngle += 10;
-    }
-    servoBase.write(servoBaseAngle);
-    //servoBase.detach();
-    //Serial.println("servoBaseRight");
-    httpd_resp_set_type(req, "text/html");
-    return httpd_resp_send(req, "OK", 2);
-}
-
 static esp_err_t servoXForward_handler(httpd_req_t *req){
     if(!servoX.attached()){
       servoX.attach(
@@ -682,27 +624,6 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
 
-    httpd_uri_t servoBaseLeft_uri = {
-        .uri       = "/servoBaseLeft",
-        .method    = HTTP_GET,
-        .handler   = servoBaseLeft_handler,
-        .user_ctx  = NULL
-    };
-
-    httpd_uri_t servoBaseMiddle_uri = {
-        .uri       = "/servoBaseMiddle",
-        .method    = HTTP_GET,
-        .handler   = servoBaseMiddle_handler,
-        .user_ctx  = NULL
-    };
-    
-    httpd_uri_t servoBaseRight_uri = {
-        .uri       = "/servoBaseRight",
-        .method    = HTTP_GET,
-        .handler   = servoBaseRight_handler,
-        .user_ctx  = NULL
-    };
-
         httpd_uri_t servoXForward_uri = {
         .uri       = "/servoXForward",
         .method    = HTTP_GET,
@@ -806,9 +727,6 @@ void startCameraServer(){
         httpd_register_uri_handler(camera_httpd, &right_uri);
         httpd_register_uri_handler(camera_httpd, &ledon_uri);
         httpd_register_uri_handler(camera_httpd, &ledoff_uri);
-        httpd_register_uri_handler(camera_httpd, &servoBaseLeft_uri);
-        httpd_register_uri_handler(camera_httpd, &servoBaseMiddle_uri);
-        httpd_register_uri_handler(camera_httpd, &servoBaseRight_uri);
         httpd_register_uri_handler(camera_httpd, &servoXForward_uri);
         httpd_register_uri_handler(camera_httpd, &servoXReset_uri);
         httpd_register_uri_handler(camera_httpd, &servoXBackward_uri);
