@@ -371,16 +371,16 @@ static esp_err_t index_handler(httpd_req_t *req){
   page += "<button style=background-color:lightcoral;width:9vw;height:8vw onmousedown=getsend('servoYReset')><b>Reset</b></button>";
   page += "<button style=background-color:ghostwhite;width:9vw;height:8vw onmousedown=getsend('servoYDown')><b>Down</b></button>";
   page += "</p>";
+  page += "<p align=center>";
+  page += "<button style=background-color:ghostwhite;width:13.5vw;height:5vw onmousedown=getsend('servoClawOpen')><b>Open Claw</b></button>";
+  page += "<button style=background-color:lightcoral;width:13.5vw;height:5vw onmousedown=getsend('servoClawClose')><b>Close Claw</b></button>";
+  page += "</p>";
   page += "</div>";
   page += "</section>";
   page += "<div>";
   page += "<p align=center>";
   page += "<button style=background-color:yellow;width:9vw;height:40px onmousedown=getsend('ledon')><b>Light ON</b></button>";
   page += "<button style=background-color:black;width:9vw;height:40px;color:white; onmousedown=getsend('ledoff')><b>Light OFF</b></button>";
-  page += "</p>";
-  page += "<p align=center>";
-  page += "<button style=background-color:ghostwhite;width:9vw;height:40px onmousedown=getsend('servoClawOpen')><b>Open Claw</b></button>";
-  page += "<button style=background-color:lightcoral;width:9vw;height:40px onmousedown=getsend('servoClawClose')><b>Close Claw</b></button>";
   page += "</p>";
   page += "</div>";
 
