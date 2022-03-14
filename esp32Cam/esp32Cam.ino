@@ -16,7 +16,7 @@
 #define CAMERA_MODEL_AI_THINKER
 
 const char* ssid = "Talles";   //Enter SSID WIFI Name
-const char* password = "1235678";   //Enter WIFI Password
+const char* password = "12345678";   //Enter WIFI Password
 
 
 #if defined(CAMERA_MODEL_WROVER_KIT)
@@ -68,7 +68,7 @@ extern int gpLf = 0; // Left 2 0
 extern int gpRb = 14; // Right 1 3
 extern int gpRf = 2; // Right 2 1
 extern int gpLed =  4; // Light
-extern int gpServoBase = 12; //12
+//extern int gpServoBase = 12; //12
 extern int gpServoClaw = 12; //13
 extern int gpServoX = 13; //15
 extern int gpServoY = 15; //14

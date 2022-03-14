@@ -24,18 +24,18 @@ extern int gpLf;
 extern int gpRb;
 extern int gpRf;
 extern int gpLed;
-extern int gpServoBase;
+//extern int gpServoBase;
 extern int gpServoClaw;
 extern int gpServoX;
 extern int gpServoY;
 extern String WiFiAddr;
 
 //Servo Setting
-Servo servoBase;
+//Servo servoBase;
 Servo servoClaw;
 Servo servoX;
 Servo servoY;
-int servoBaseAngle = 90;
+//int servoBaseAngle = 90;
 int servoClawAngle = 90;
 int servoXAngle = 90;
 int servoYAngle = 90;
@@ -391,46 +391,46 @@ static esp_err_t index_handler(httpd_req_t *req){
 
 static esp_err_t go_handler(httpd_req_t *req){
     WheelAct(HIGH, LOW, HIGH, LOW);
-    Serial.println("Forward");
+    //Serial.println("Forward");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 static esp_err_t back_handler(httpd_req_t *req){
     WheelAct(LOW, HIGH, LOW, HIGH);
-    Serial.println("Backward");
+    //Serial.println("Backward");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 
 static esp_err_t left_handler(httpd_req_t *req){
     WheelAct(HIGH, LOW, LOW, HIGH);
-    Serial.println("Left");
+    //Serial.println("Left");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 static esp_err_t right_handler(httpd_req_t *req){
     WheelAct(LOW, HIGH, HIGH, LOW);
-    Serial.println("Right");
+    //Serial.println("Right");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 
 static esp_err_t stop_handler(httpd_req_t *req){
     WheelAct(LOW, LOW, LOW, LOW);
-    Serial.println("Stop");
+    //Serial.println("Stop");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 
 static esp_err_t ledon_handler(httpd_req_t *req){
     digitalWrite(gpLed, HIGH);
-    Serial.println("LED ON");
+    //Serial.println("LED ON");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 static esp_err_t ledoff_handler(httpd_req_t *req){
     digitalWrite(gpLed, LOW);
-    Serial.println("LED OFF");
+    //Serial.println("LED OFF");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -448,7 +448,7 @@ static esp_err_t servoXForward_handler(httpd_req_t *req){
     }
     servoX.write(servoXAngle);
     //servoBase.detach();
-    Serial.println("servoXForward");
+    //Serial.println("servoXForward");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -464,7 +464,7 @@ static esp_err_t servoXReset_handler(httpd_req_t *req){
     servoXAngle = 90;
     servoX.write(servoXAngle);
     //servoBase.detach();
-    Serial.println("servoXReset");
+    //Serial.println("servoXReset");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -482,7 +482,7 @@ static esp_err_t servoXBackward_handler(httpd_req_t *req){
     }
     servoX.write(servoXAngle);
     //servoBase.detach();
-    Serial.println("servoXBackward");
+    //Serial.println("servoXBackward");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -501,7 +501,7 @@ static esp_err_t servoYUp_handler(httpd_req_t *req){
     }
     servoY.write(servoYAngle);
     //servoBase.detach();
-    Serial.println("servoYUp");
+    //Serial.println("servoYUp");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -517,7 +517,7 @@ static esp_err_t servoYReset_handler(httpd_req_t *req){
     servoYAngle = 90;
     servoY.write(servoYAngle);
     //servoBase.detach();
-    Serial.println("servoYReset");
+    //Serial.println("servoYReset");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -535,7 +535,7 @@ static esp_err_t servoYDown_handler(httpd_req_t *req){
     }
     servoY.write(servoYAngle);
     //servoBase.detach();
-    Serial.println("servoYDown");
+    //Serial.println("servoYDown");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -549,9 +549,10 @@ static esp_err_t servoClawOpen_handler(httpd_req_t *req){
         180
       );
     }
-    servoClawAngle = 50;
+    if(servoClawAngle >= 10)
+      servoClawAngle -= 10;
     servoClaw.write(servoClawAngle);
-    Serial.println("servoClawOpen");
+    //Serial.println("servoClawOpen");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -565,9 +566,11 @@ static esp_err_t servoClawClose_handler(httpd_req_t *req){
         180
       );
     }
+    if(servoClawAngle <= 170)
+      servoClawAngle += 10;
     servoClawAngle = 100;
     servoClaw.write(servoClawAngle);
-    Serial.println("servoClawClose");
+    //Serial.println("servoClawClose");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
@@ -744,23 +747,6 @@ void startCameraServer(){
         httpd_register_uri_handler(stream_httpd, &stream_uri);
     }
 }
-
-    /*if(!servoX.attached()){
-      servoX.attach(
-        gpServoX,
-        4,
-        0,
-        180
-      );
-     }
-    if(!servoY.attached()){
-      servoY.attach(
-        gpServoY,
-        5,
-        0,
-        180
-      );
-     }*/
 
 void WheelAct(int nLf, int nLb, int nRf, int nRb)
 {
