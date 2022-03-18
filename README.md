@@ -25,9 +25,15 @@ The HTML created on app_httpd.cpp has buttons that send messages on clicks. Thos
 'activate' handlers, that are responsible for the movements.
 
 #### Components:
-- a  
-- b  
-- c  
+- Two 18650 batteries
+- 12V 25C 2200mH drone battery
+- 5V voltage regulator
+- Two 3-6V DC motors
+- Three 9g SG90 servos
+- **ESP-32 cam**
+- l298n motor driver
+- The foundation and the other pieces are made of acrylic and 3D printer plastic,  
+and are attached with double sided tape
 
 ## Schematic
 
