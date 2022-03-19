@@ -67,11 +67,11 @@ const char* password = "123456789";   //Enter WIFI Password
 // GPIO Setting
 // Pins 16 and 0 had problems with the camera
 extern int gpLb =  12; // Left 1
-extern int gpLf = 1; // Left 2 0
+extern int gpLf = 1; // Left 2 (UOT)
 extern int gpRb = 13; // Right 1
 extern int gpRf = 14; // Right 2
 extern int gpLed =  4; // Light
-extern int gpServoClaw = 3; //13
+extern int gpServoClaw = 3; // (UOR)
 extern int gpServoX = 15;
 extern int gpServoY = 2;
 extern String WiFiAddr ="192.168.4.1";
