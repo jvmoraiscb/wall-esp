@@ -3,9 +3,9 @@
 <img src="https://github.com/jvmoraiscb/WALL-E-ESP32/blob/main/images/WALL-E-ESP32.jpg"/>
 </div>
 <div>
-*Federal University of Espírito Santo - UFES - Computer Engineering*  
-Projeto Integrado em Computação - PIC  
-**Made by João Victor Morais, Talles Cavalleiro and Vinicius Cole** 
+<b><p>Made by João Victor Morais, Talles Cavalleiro and Vinicius Cole</p></b>
+<p>Federal University of Espírito Santo (UFES) - Computer Engineering</p>
+<p>Projeto Integrado em Computação - PIC</p>
 </div>
 
 ## Summary
