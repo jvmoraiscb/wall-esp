@@ -1,7 +1,7 @@
 // The project was inspired by the Camera Surveillance Car from Viral Science (www.youtube.com/c/viralscience | www.viralsciencecreativity.com)
 
 // João Victor Morais, Talles Cavalleiro and Vinicius Cole
-// Brazil, 2022
+// Federal University of Espirito Santo - Brazil, 2022
 
 #include "esp_camera.h"
 #include <WiFi.h>
