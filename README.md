@@ -1,4 +1,7 @@
 # WALL-E_ESP32-PROJECT
+<div align="center">
+<img src="https://github.com/jvmoraiscb/WALL-E-ESP32/tree/main/images/WALL-E-ESP32"/>
+</div>
 *Federal University of Espírito Santo - UFES - Computer Engineering*  
 Projeto Integrado em Computação - PIC  
 **Made by João Victor Morais, Talles Cavalleiro and Vinicius Cole** 
@@ -36,6 +39,9 @@ The HTML created on app_httpd.cpp has buttons that send messages on clicks. Thos
 and are attached with double sided tape
 
 ## Schematic
+<div align="center">
+<img src="https://github.com/jvmoraiscb/WALL-E-ESP32/tree/main/images/electrical-schematic"/>
+</div>
 
 ## WebServer
 
