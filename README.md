@@ -1,4 +1,4 @@
-# WALL-E_ESP32-PROJECT
+# WALL-ESP PROJECT
 <div align="center">
 <img src="https://github.com/jvmoraiscb/WALL-E-ESP32/blob/main/images/WALL-E-ESP32.jpg"/>
 </div>
