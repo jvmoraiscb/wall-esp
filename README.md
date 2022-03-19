@@ -51,23 +51,4 @@ and are attached with double sided tape
 <div>
 
 ## Video
-<!DOCTYPE html>
-<html>
-<head>
- <meta charset="UTF-8">
- <meta name="Generator" content="EditPlusÂ®">
- <meta name="Author" content="Vagner Bellacosa">
- <meta name="Keywords" content="Exemplo codigo html com pagina Youtube embutida">
- <meta name="Description" content="Treinamento avanÃ§ado em Html e chamada a site externo incluindo video youtube">
- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
- <title>HTML Video Tag Example</title>
-</head>
-<body>
-<br>
-<iframe width="100%" height="443" class="yvideo" id="pgHr6luyjjs"
-       src="https://youtu.be/jAPvVoAAZ08"			    
-       frameborder="0" allowfullscreen>
-<p>Seu navegador não possui Suporte para este recurso...</p> 
-</iframe>
-</body>
-</html>
+[![ESP32-CAM](https://img.youtube.com/vi/jAPvVoAAZ08)](https://www.youtube.com/watch?v=jAPvVoAAZ08)
