@@ -1,6 +1,6 @@
 # WALL-E_ESP32-PROJECT
 <div align="center">
-<img src="https://github.com/jvmoraiscb/WALL-E-ESP32/tree/main/images/WALL-E-ESP32"/>
+<img src="https://github.com/jvmoraiscb/WALL-E-ESP32/tree/main/images/WALL-E-ESP32.jpg"/>
 </div>
 *Federal University of Espírito Santo - UFES - Computer Engineering*  
 Projeto Integrado em Computação - PIC  
@@ -40,7 +40,7 @@ and are attached with double sided tape
 
 ## Schematic
 <div align="center">
-<img src="https://github.com/jvmoraiscb/WALL-E-ESP32/tree/main/images/electrical-schematic"/>
+<img src="https://github.com/jvmoraiscb/WALL-E-ESP32/tree/main/images/electrical-schematic.png"/>
 </div>
 
 ## WebServer
