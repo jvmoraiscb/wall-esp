@@ -51,4 +51,4 @@ and are attached with double sided tape
 <div>
 
 ## Video
-[![ESP32-CAM](https://img.youtube.com/vi/jAPvVoAAZ08)](https://www.youtube.com/watch?v=jAPvVoAAZ08)
+[![ESP32-CAM](https://img.youtube.com/vi/jAPvVoAAZ08/0.jpg)](https://www.youtube.com/watch?v=jAPvVoAAZ08)
