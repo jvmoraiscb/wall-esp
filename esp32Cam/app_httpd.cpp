@@ -32,7 +32,7 @@ extern String WiFiAddr;
 
 //Servo Setting
 //Servo servoBase;
-Servo servoClaw;
+//Servo servoClaw;
 Servo servoX;
 Servo servoY;
 //int servoBaseAngle = 90;
@@ -443,8 +443,8 @@ static esp_err_t servoXForward_handler(httpd_req_t *req){
         180
       );
     }
-    if(servoXAngle >= 10){
-        servoXAngle -= 10;
+    if(servoXAngle <= 170){
+        servoXAngle += 10;
     }
     servoX.write(servoXAngle);
     //servoBase.detach();
@@ -477,8 +477,8 @@ static esp_err_t servoXBackward_handler(httpd_req_t *req){
         180
       );
     }
-    if(servoXAngle <= 170){
-        servoXAngle += 10;
+    if(servoXAngle >= 10){
+        servoXAngle -= 10;
     }
     servoX.write(servoXAngle);
     //servoBase.detach();
@@ -496,8 +496,8 @@ static esp_err_t servoYUp_handler(httpd_req_t *req){
         180
       );
     }
-    if(servoYAngle >= 10){
-        servoYAngle -= 10;
+    if(servoYAngle <= 170){
+        servoYAngle += 10;
     }
     servoY.write(servoYAngle);
     //servoBase.detach();
@@ -530,8 +530,8 @@ static esp_err_t servoYDown_handler(httpd_req_t *req){
         180
       );
     }
-    if(servoYAngle <= 170){
-        servoYAngle += 10;
+    if(servoYAngle >= 10){
+        servoYAngle -= 10;
     }
     servoY.write(servoYAngle);
     //servoBase.detach();
@@ -541,7 +541,7 @@ static esp_err_t servoYDown_handler(httpd_req_t *req){
 }
 
 static esp_err_t servoClawOpen_handler(httpd_req_t *req){
-    if(!servoClaw.attached()){
+    /*if(!servoClaw.attached()){
       servoClaw.attach(
         gpServoClaw,
         3,
@@ -551,14 +551,14 @@ static esp_err_t servoClawOpen_handler(httpd_req_t *req){
     }
     if(servoClawAngle >= 10)
       servoClawAngle -= 10;
-    servoClaw.write(servoClawAngle);
+    servoClaw.write(servoClawAngle);*/
     //Serial.println("servoClawOpen");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
 
 static esp_err_t servoClawClose_handler(httpd_req_t *req){
-    if(!servoClaw.attached()){
+    /*if(!servoClaw.attached()){
       servoClaw.attach(
         gpServoClaw,
         3,
@@ -569,7 +569,7 @@ static esp_err_t servoClawClose_handler(httpd_req_t *req){
     if(servoClawAngle <= 170)
       servoClawAngle += 10;
     servoClawAngle = 100;
-    servoClaw.write(servoClawAngle);
+    servoClaw.write(servoClawAngle);*/
     //Serial.println("servoClawClose");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
