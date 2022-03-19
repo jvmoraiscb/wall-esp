@@ -46,6 +46,9 @@ and are attached with double sided tape
 </div>
 
 ## WebServer
+<img src="https://github.com/jvmoraiscb/WALL-E-ESP32/blob/main/images/web-server.jpg"/>
+</div>
+<div>
 
 ## Video
 link
