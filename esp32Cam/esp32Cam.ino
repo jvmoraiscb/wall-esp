@@ -1,5 +1,7 @@
-//Viral Science www.youtube.com/c/viralscience  www.viralsciencecreativity.com
-//ESP32 Camera Surveillance Car
+// The project was inspired by the Camera Surveillance Car from Viral Science (www.youtube.com/c/viralscience | www.viralsciencecreativity.com)
+
+// João Victor Morais, Talles Cavalleiro and Vinicius Cole
+// Brazil, 2022
 
 #include "esp_camera.h"
 #include <WiFi.h>
@@ -15,8 +17,8 @@
 //#define CAMERA_MODEL_M5STACK_PSRAM
 #define CAMERA_MODEL_AI_THINKER
 
-const char* ssid = "CLARO_2G4C5647";   //Enter SSID WIFI Name
-const char* password = "DA4C5647";   //Enter WIFI Password
+const char* ssid = "ESP32-CAM Access Point";   //Enter SSID WIFI Name
+const char* password = "123456789";   //Enter WIFI Password
 
 
 #if defined(CAMERA_MODEL_WROVER_KIT)
@@ -63,20 +65,21 @@ const char* password = "DA4C5647";   //Enter WIFI Password
 #endif
 
 // GPIO Setting
-extern int gpLb =  12; // Left 1 16
+// Pins 16 and 0 had problems with the camera
+extern int gpLb =  12; // Left 1
 extern int gpLf = 1; // Left 2 0
-extern int gpRb = 13; // Right 1 3
-extern int gpRf = 14; // Right 2 1
+extern int gpRb = 13; // Right 1
+extern int gpRf = 14; // Right 2
 extern int gpLed =  4; // Light
-//extern int gpServoBase = 12; //12
 extern int gpServoClaw = 3; //13
-extern int gpServoX = 15; //15
-extern int gpServoY = 2; //14
-extern String WiFiAddr ="";
+extern int gpServoX = 15;
+extern int gpServoY = 2;
+extern String WiFiAddr ="192.168.4.1";
 
 void startCameraServer();
 
 void setup() {
+  // Serial is disabled because UOR and UOT are being used as output
   //Serial.begin(115200);
   //Serial.setDebugOutput(true);
   //Serial.println();
@@ -86,15 +89,6 @@ void setup() {
   pinMode(gpRb, OUTPUT); //Right Forward
   pinMode(gpRf, OUTPUT); //Right Backward
   pinMode(gpLed, OUTPUT); //Light
-
-  /*ledcSetup(3, 50, 16); //50 hz PWM, 16-bit resolution and range from 3250 to 6500
-  ledcAttachPin(gpServoBase, 3);
-  ledcSetup(4, 50, 16); //50 hz PWM, 16-bit resolution and range from 3250 to 6500
-  ledcAttachPin(gpServoClaw, 4);
-  ledcSetup(5, 50, 16); //50 hz PWM, 16-bit resolution and range from 3250 to 6500
-  ledcAttachPin(gpServoX, 5);
-  ledcSetup(6, 50, 16); //50 hz PWM, 16-bit resolution and range from 3250 to 6500
-  ledcAttachPin(gpServoY, 6);*/
 
   //initialize
   digitalWrite(gpLb, LOW);
@@ -146,6 +140,8 @@ void setup() {
   sensor_t * s = esp_camera_sensor_get();
   s->set_framesize(s, FRAMESIZE_CIF);
 
+  //Station mode
+  /*
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -154,20 +150,24 @@ void setup() {
   }
   //Serial.println("");
   //Serial.println("WiFi connected");
+  */
+
+  //Access Point mode
+  WiFi.softAP(ssid, password);
 
   startCameraServer();
 
   //Serial.print("Camera Ready! Use 'http://");
   //Serial.print(WiFi.localIP());
-  WiFiAddr = WiFi.localIP().toString();
+  //WiFiAddr = WiFi.localIP().toString();
   //Serial.println("' to connect");
 
+  // To know it was turned on
   digitalWrite(gpLed, HIGH);
   delay(500);
   digitalWrite(gpLed, LOW);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
 
 }

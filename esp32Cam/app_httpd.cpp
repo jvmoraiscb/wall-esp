@@ -1,3 +1,5 @@
+//The code below was provided by espressif systems, follow its license:
+
 // Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,18 +26,15 @@ extern int gpLf;
 extern int gpRb;
 extern int gpRf;
 extern int gpLed;
-//extern int gpServoBase;
 extern int gpServoClaw;
 extern int gpServoX;
 extern int gpServoY;
 extern String WiFiAddr;
 
 //Servo Setting
-//Servo servoBase;
-//Servo servoClaw;
+//Servo servoClaw; servoClaw in our final version is disabled
 Servo servoX;
 Servo servoY;
-//int servoBaseAngle = 90;
 int servoClawAngle = 90;
 int servoXAngle = 90;
 int servoYAngle = 90;
@@ -447,7 +446,6 @@ static esp_err_t servoXForward_handler(httpd_req_t *req){
         servoXAngle += 10;
     }
     servoX.write(servoXAngle);
-    //servoBase.detach();
     //Serial.println("servoXForward");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
@@ -463,7 +461,6 @@ static esp_err_t servoXReset_handler(httpd_req_t *req){
     }
     servoXAngle = 90;
     servoX.write(servoXAngle);
-    //servoBase.detach();
     //Serial.println("servoXReset");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
@@ -481,7 +478,6 @@ static esp_err_t servoXBackward_handler(httpd_req_t *req){
         servoXAngle -= 10;
     }
     servoX.write(servoXAngle);
-    //servoBase.detach();
     //Serial.println("servoXBackward");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
@@ -500,7 +496,6 @@ static esp_err_t servoYUp_handler(httpd_req_t *req){
         servoYAngle += 10;
     }
     servoY.write(servoYAngle);
-    //servoBase.detach();
     //Serial.println("servoYUp");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
@@ -516,7 +511,6 @@ static esp_err_t servoYReset_handler(httpd_req_t *req){
     }
     servoYAngle = 90;
     servoY.write(servoYAngle);
-    //servoBase.detach();
     //Serial.println("servoYReset");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
@@ -534,7 +528,6 @@ static esp_err_t servoYDown_handler(httpd_req_t *req){
         servoYAngle -= 10;
     }
     servoY.write(servoYAngle);
-    //servoBase.detach();
     //Serial.println("servoYDown");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
