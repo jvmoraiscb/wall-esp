@@ -39,5 +39,5 @@ A low-cost version of the famous character WALL-E controlled by a webserver.
 ## WebServer
 <div>
 <img align="center" src="https://github.com/jvmoraiscb/WALL-E-ESP32/blob/main/images/web-server.jpg"/>
-<p>To control the WALL-ESP, you must activate it and wait until its flash indicates that the access point has already been powered up. After that, we turn off the mobile internet on the smartphone and connect it to the ESP 32 ACCESS POINT network. Then we open a browser and put the url: 192.168.4.1</p>
+<p>To control the WALL-ESP, you must activate it and wait until its flash indicates that the access point has already been powered up. After that, turn off the mobile internet on the smartphone and connect it to the ESP 32 ACCESS POINT network. Then open a browser and put the url: 192.168.4.1</p>
 </div>
