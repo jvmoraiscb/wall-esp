@@ -1,8 +1,7 @@
 # WALL-ESP PROJECT
 <div align="center">
-<a href="https://www.youtube.com/watch?v=CoDTm-s-2r8">
-<img src="https://github.com/jvmoraiscb/WALL-E-ESP32/blob/main/images/WALL-E-ESP32.jpg"/>
-</a>
+<img src="https://github.com/jvmoraiscb/WALL-E-ESP32/blob/main/images/WALL-E-ESP32.png"/>
+<p>The full presentation can be found here (in portuguese ) -- > <a href="https://www.youtube.com/watch?v=CoDTm-s-2r8">WALL-ESP</a></p>
 </div>
 <div>
 <p><b>Made by João Victor Morais, Talles Cavalleiro and Vinicius Cole</b>
@@ -20,7 +19,7 @@ A low-cost version of the famous character WALL-E controlled by a webserver.
 <p text-align: justify>WALL-ESP is a cart with a mechanical arm, controlled by an ESP32-cam.<br>Through a WEB server, it's possible to see the video transmitted remotely by the esp-cam, as well as control the movements of the cart and the arm in real time. The cart moves to every direction and the arm can move up and down, forward and backward, and open or close the claw. The HTML created on app_httpd.cpp has buttons that send messages on clicks. Those requests 'activate' handlers, that are responsible for the movements.</p>
 </div>
 
-#### Components:
+## Components:
 - 2 laptop batteries cells 18650
 - Drone battery 12V
 - Voltage regulator 5V
