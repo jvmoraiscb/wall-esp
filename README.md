@@ -1,7 +1,7 @@
 # WALL-ESP PROJECT
 <div align="center">
 <img src="https://github.com/jvmoraiscb/WALL-E-ESP32/blob/main/images/WALL-E-ESP32.png"/>
-<p>The full presentation can be found here (in portuguese ) -- > <a href="https://www.youtube.com/watch?v=CoDTm-s-2r8">WALL-ESP</a></p>
+<p>The full presentation can be found here (in portuguese) -- > <a href="https://www.youtube.com/watch?v=CoDTm-s-2r8">WALL-ESP</a></p>
 </div>
 <div>
 <p><b>Made by João Victor Morais, Talles Cavalleiro and Vinicius Cole</b>
@@ -34,9 +34,10 @@ A low-cost version of the famous character WALL-E controlled by a webserver.
 <div align="center">
 <img src="https://github.com/jvmoraiscb/WALL-E-ESP32/blob/main/images/electrical-schematic.png"/>
 </div>
-<p><i>The 9 volt battery is only for illustrative purposes</i></p>
+<p><i>The 9V batterys are only for illustrative purposes</i></p>
 
 ## WebServer
 <div align="center">
 <img src="https://github.com/jvmoraiscb/WALL-E-ESP32/blob/main/images/web-server.jpg"/>
+<p>To control the WALL-ESP, you must activate it and wait until its flash indicates that the access point has already been powered up. After that, we turn off the mobile internet on the smartphone and connect it to the ESP 32 ACCESS POINT network. Then we open a browser and put the url: 192.168.4.1</p>
 </div>
