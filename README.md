@@ -28,8 +28,7 @@ A low-cost version of the famous character WALL-E controlled by a webserver.
 - **ESP-32 cam**
 - L298N motor driver
 - Jumpers
-- The foundation and the other pieces are made of acrylic and 3D printer plastic,  
-and are attached with double sided tape
+- The foundation and the other pieces are made of acrylic and 3D printer plastic, and are attached with double sided tape
 
 ## Schematic
 <div align="center">
