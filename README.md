@@ -1,4 +1,4 @@
-# WALL-ESP PROJECT
+# WALL-ESP PROJEC
 <div align="center">
 <img src="https://github.com/jvmoraiscb/WALL-E-ESP32/blob/main/images/WALL-E-ESP32.png"/>
 <p>The full presentation can be found here (in portuguese) --> <a href="https://www.youtube.com/watch?v=CoDTm-s-2r8">WALL-ESP</a></p>
